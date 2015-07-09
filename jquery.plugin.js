@@ -1,4 +1,4 @@
-$.fn.insertAt = function (element, index) {
+﻿$.fn.insertAt = function (element, index) {
     var lastIndex = this.children().size()
     if (index < 0) {
         index = Math.max(0, lastIndex + 1 + index)
