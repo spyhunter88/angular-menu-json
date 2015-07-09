@@ -1,6 +1,6 @@
 var app = angular.module('app', ['myMenu', 'ui.bootstrap']);
 
-app.controller('menuController', function ($scope, $filter) {
+app.controller('menuController', function ($scope, $filter, $http) {
     //$scope.navbar  [];
     //$scope.navbar.push({ href: '#/', title: 'Home', isActive: true });
     //$scope.navbar.push({ href: '#/claim', title: 'Claim', isActive: false });
@@ -9,7 +9,7 @@ app.controller('menuController', function ($scope, $filter) {
     $scope.type = 1;
 
     $scope.menu1 = [
-       { href: '#/', title: 'Home', route: '/' },
+       { href: '#/', title: 'DefaultMenu', route: '/' },
        { href: '#/customer', title: 'Customer', route: '/customer' },
        { href: '#/claim', title: 'Claim', route: '(/claim)|(/newClaim)', submenus: [] },
        {
@@ -49,11 +49,22 @@ app.controller('menuController', function ($scope, $filter) {
         }
     };
 
+    $scope.loadJson = function() {
+        $http.get('flat-menu.json').then(function(data){
+            $scope.menus = data.data.nestedArray('submenus', 'id', 'parentID');
+        });
+    };
+
+    $scope.flattenMenu = function() {
+        var result = $scope.menus.flattenArray('submenus');
+        console.log(result);
+    };
+
     // tree view package
     $scope.list = [
         { name: 'Developer', opened: true, children: [
             { name: 'Front-End', children: [
-                { name: 'Jack', title: 'LEader' },
+                { name: 'Jack', title: 'Leader' },
                 { name: 'John', title: 'Senior F2E' },
                 { name: 'Jason', title: 'Junior F2E' }
             ]},

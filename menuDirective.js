@@ -16,7 +16,7 @@
                 menus: '='
             },
             compile: function (tElement, tAttr) {
-                // define recursive function
+                // define recursive function to add hasSub and level attributes
                 var recursive = function (menu, level) {
                     menu.level = level;
                     if (menu.submenus == undefined || menu.submenus.length == 0) {

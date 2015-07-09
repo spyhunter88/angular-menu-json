@@ -1,0 +1,47 @@
+[ { "href" : "#/",
+    "id" : "1",
+    "route" : "/",
+    "title" : "Menu JSON"
+  },
+  { "href" : "#/customer",
+    "id" : 2,
+    "route" : "/customer",
+    "title" : "Customer"
+  },
+  { "href" : "#/claim",
+    "id" : 3,
+    "route" : "(/claim)|(/newClaim)",
+    "title" : "Claim"
+  },
+  { "href" : "",
+    "id" : 4,
+    "route" : "/request",
+    "title" : "Request"
+  },
+  { "href" : "#/newRequest",
+    "id" : 5,
+    "parentID" : 4,
+    "title" : "New Request"
+  },
+  { "href" : "#/removeRequest",
+    "id" : 6,
+    "parentID" : 4,
+    "title" : "Remove Request"
+  },
+  { "href" : "",
+    "id" : 7,
+    "parentID" : 4,
+    "route" : "/request",
+    "title" : "More"
+  },
+  { "href" : "#/level31",
+    "id" : 8,
+    "parentID" : 7,
+    "title" : "Level 3.1"
+  },
+  { "href" : "#/level32",
+    "id" : 9,
+    "parentID" : 7,
+    "title" : "Level 3.2"
+  }
+]

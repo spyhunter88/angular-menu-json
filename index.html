@@ -40,6 +40,8 @@
         <div class="container">
             <div class="row">
                 <button class="btn btn-default" ng-click="changeMenu()">Change Menu</button>
+                <button class="btn btn-default" ng-click="loadJson()">From Flat JSON</button>
+                <button class="btn btn-default" ng-click="flattenMenu()">Flatten Menu</button>
                 <br>
                 <label>Menu Data</label>
                 <span>{{menus | json}}</span>
