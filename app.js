@@ -83,6 +83,10 @@ app.controller('menuController', function ($scope, $filter, $http) {
 
     $scope.selectedArr = [2];
 
+    $scope.testBindSelectArr = function() {
+        $scope.selectedArr = [6];
+    };
+
     // $scope.toggleAllCheckboxes = function($event) {
     //     var item, selected = $event.target.checked;
 

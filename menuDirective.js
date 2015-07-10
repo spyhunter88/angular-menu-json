@@ -88,8 +88,10 @@
                 function recursiveSet(selectArr, item) {
                     if (selectArr.indexOf(item.id) != -1) {
                         item.selected = true;
-                        $scope.$broadcast('changeChildren', item);
+                        if (item.children)
+                            $scope.$broadcast('changeChildren', item);
                     } else {
+                        item.selected = false;
                         if (item.children != null) {
                             for (var i = 0, len = item.children.length; i < len; i++) 
                                 recursiveSet(selectArr, item.children[i]);
@@ -168,6 +170,12 @@
                     if (parentScope.item != null) {
                         $scope.$broadcast('changeParent', parentScope);
                     }
+                });
+
+                // watch for selectedId changed
+                $scope.$watch('selectedId', function (val) {
+                    for (var i = 0, len = $scope.menu.length; i < len; i++)
+                        recursiveSet(val, $scope.menu[i]);
                 });
             }
         }
