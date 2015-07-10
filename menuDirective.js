@@ -68,12 +68,13 @@
             restrict: 'E',
             scope: {
                 menu: '=',
-                selectedId: '=?',
-                autoGenerateSelectedId: '=?'
+                selectedId: '=?'
             },
             templateUrl: 'menu-tree.html',
             controller: function ($scope, $filter) {
-                if ($scope.autoGenerateSelectedId == undefined || $scope.autoGenerateSelectedId || $scope.selectedId == undefined) {
+                console.log($scope.selectedId);
+
+                if ($scope.selectedId == undefined) {
                     $scope.selectedId = [];
                     for (var i = 0, len = $scope.menu.length; i < len; i++)
                         recursiveGet($scope.selectedId, $scope.menu[i]);
@@ -81,6 +82,7 @@
                     for (var i = 0, len = $scope.menu.length; i < len; i++)
                         recursiveSet($scope.selectedId, $scope.menu[i]);
                 };
+
 
                 // Set select mode for all node have ID match in selectArr
                 function recursiveSet(selectArr, item) {
@@ -99,18 +101,28 @@
                 function recursiveGet(selectArr, item) {
                     // if (selectArr == null) selectArr = []; // put it outside the function to improve performance
                     if (item.children == null || item.children.length == 0) {
-                        selectArr.push(item.id);
+                        if (item.selected) selectArr.push(item.id);
                     } else {
                         for (var i = 0, len = item.children.length; i < len; i++)
                             recursiveGet(selectArr, item.children[i]);
                     }
                 };
 
+                function updateSelectedId(id, addOrRemove) {
+                    var idx = $scope.selectedId.indexOf(id);
+                    if (addOrRemove && idx == -1) $scope.selectedId.push(id);
+                    if (!addOrRemove && idx != -1) $scope.selectedId.splice(idx, 1);
+                };
+
                 $scope.toggleAllCheckboxes = function($event) {
                     var item, selected = $event.target.checked;
+                    // reset selectedId
+                    $scope.selectedId = [];
                     for (var i = 0, len = $scope.menu.length; i < len; i++) {
                         item = $scope.menu[i];
                         item.selected = selected;
+                        if (selected) $scope.selectedId.push(item.id);
+                        else $scope.selectedId = [];
                         if (item.children)
                             $scope.$broadcast('changeChildren', item);
                     }
@@ -122,6 +134,7 @@
                 };
 
                 $scope.toggleCheckbox = function(item, parentScope) {
+                    updateSelectedId(item.id, item.selected);
                     if (item.children != null) {
                         $scope.$broadcast('changeChildren', item);
                     }
@@ -131,10 +144,12 @@
                 };
 
                 $scope.$on('changeChildren', function (event, parentItem) {
-                    var child;
+                    var child, id;
                     for (var i = 0, len = parentItem.children.length; i < len; i++) {
-                        child = parentItem.children[i];
+                        child = parentItem.children[i]; id = parentItem.children[i].id;
                         child.selected = parentItem.selected;
+                        // Add/Remove child's id into select list
+                        updateSelectedId(id, parentItem.selected);
                         if (child.children != null) {
                             $scope.$broadcast('changeChildren', child);
                         }
@@ -142,10 +157,14 @@
                 });
 
                 $scope.$on('changeParent', function(event, parentScope) {
-                    var children;
-                    children = parentScope.item.children;
-                    parentScope.item.selected = $filter('selected')(children).length == children.length;
+                    var children = parentScope.item.children, id = parentScope.item.id, 
+                        selected = $filter('selected')(children).length == children.length
+                    parentScope.item.selected = selected;
                     parentScope = parentScope.$parent.$parent;
+
+                    // Add/Remove child's id into select list
+                    updateSelectedId(id, selected);
+
                     if (parentScope.item != null) {
                         $scope.$broadcast('changeParent', parentScope);
                     }

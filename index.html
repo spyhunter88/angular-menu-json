@@ -47,7 +47,7 @@
                 <span>{{menus | json}}</span>
             </div>
 
-            <div class="row" ng-show="false">
+<!--             <div class="row" ng-show="false">
             <div class="col-md-10">
             <table class="table-nested">
                 <thead>
@@ -63,37 +63,18 @@
                 </tbody>
             </table>
             </div>
-            </div>
+            </div> -->
 
             <div class="row">
+                <label>Menu Selected</label>
+                <span>{{selectedArr | json}}</span>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
-                    <ng-menu-table menu="list"></ng-menu-table>
+                    <ng-menu-table menu="list" selected-id="selectedArr"></ng-menu-table>
                 </div>
             </div>
         </div>
 
-
-
-        <script type="text/ng-template" id="table_tree.html">
-            <tr ng-class="{parent: item.children}" ng-init="parentScope = $parent.$parent; initCheckbox(item, parentScope.item)">
-                <td class="cell-input">
-                    <input type="checkbox" ng-model="item.selected" ng-change="toggleCheckbox(item, parentScope)">
-                </td>
-                <td class="cell-name" ng-click="item.opened = !item.opened">
-                    <div class="indent" style="padding-left: {{15*level}}px;"></div>
-                    {{item.name}}
-                </td>
-                <td>{{item.children.length}}</td>
-                <td>{{item.title}}</td>
-            </tr>
-            <tr class="children" ng-if="item.children && item.children.length > 0">
-            <td colspan="4">
-                <table>
-                    <tbody ng-class="{opened: item.opened}" ng-repeat="item in item.children" ng-include="'table_tree.html'" ng-init="level=level+1">
-                    </tbody>
-                </table>
-            </td>
-            </tr>
-        </script>
     </body>
 </html>

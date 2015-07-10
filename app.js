@@ -62,24 +62,26 @@ app.controller('menuController', function ($scope, $filter, $http) {
 
     // tree view package
     $scope.list = [
-        { name: 'Developer', opened: true, children: [
-            { name: 'Front-End', children: [
-                { name: 'Jack', title: 'Leader' },
-                { name: 'John', title: 'Senior F2E' },
-                { name: 'Jason', title: 'Junior F2E' }
+        { id: 1, name: 'Developer', opened: true, children: [
+            { id: 2, name: 'Front-End', children: [
+                { id: 3, name: 'Jack', title: 'Leader' },
+                { id: 4, name: 'John', title: 'Senior F2E' },
+                { id: 5, name: 'Jason', title: 'Junior F2E' }
             ]},
-            { name: 'Back-End', children: [
-                { name: 'Mary', title: 'Leader' },
-                { name: 'Gary', title: 'Intern' }
+            { id: 6, name: 'Back-End', children: [
+                { id: 7, name: 'Mary', title: 'Leader' },
+                { id: 8, name: 'Gary', title: 'Intern' }
             ]}
         ]},
-        { name: 'Design', children: [
-            { name: 'Freeman', title: 'Designer' }
+        { id: 9, name: 'Design', children: [
+            { id: 10, name: 'Freeman', title: 'Designer' }
         ]},
-        { name: 'S&S', children: [
-            { name: 'Nikky', title: 'Robot' }
+        { id: 11, name: 'S&S', children: [
+            { id: 12, name: 'Nikky', title: 'Robot' }
         ]}
     ];
+
+    $scope.selectedArr = [2];
 
     // $scope.toggleAllCheckboxes = function($event) {
     //     var item, selected = $event.target.checked;
